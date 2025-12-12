@@ -335,7 +335,6 @@ const IntroPage = ({ activeIntroTab, setActiveIntroTab }) => {
               <div className="aspect-[21/9] rounded-3xl bg-slate-100 overflow-hidden shadow-lg mx-auto relative">
                  <img src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Vision" className="w-full h-full object-cover"/>
                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent flex items-end p-8 md:p-12">
-                    <p className="text-white text-lg md:text-2xl font-medium italic">"하나님을 기뻐하는 것이 너희의 힘이니라 (느 8:10)"</p>
                  </div>
               </div>
             </div>
@@ -437,13 +436,218 @@ const IntroPage = ({ activeIntroTab, setActiveIntroTab }) => {
 
           {activeIntroTab === '예배안내' && (
             <div className="space-y-12 animate-fade-in">
-              <div className="bg-slate-50 p-8 rounded-2xl border border-slate-100">
-                <h3 className="font-bold text-xl mb-6 flex items-center"><Clock className="mr-2 text-sky-600"/> 예배 시간</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                    <div className="flex justify-between bg-white p-4 rounded-lg shadow-sm"><span>주일 1부</span> <span className="font-bold">09:00</span></div>
-                    <div className="flex justify-between bg-white p-4 rounded-lg shadow-sm"><span>주일 2부</span> <span className="font-bold">11:00</span></div>
-                    <div className="flex justify-between bg-white p-4 rounded-lg shadow-sm"><span>주일 3부</span> <span className="font-bold">14:30</span></div>
-                    <div className="flex justify-between bg-white p-4 rounded-lg shadow-sm"><span>금요예배</span> <span className="font-bold">21:00</span></div>
+              {/* Newcomer Guide */}
+              <div className="bg-sky-50 border border-sky-100 rounded-2xl p-8 flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
+                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center text-sky-600 shadow-sm shrink-0">
+                  <Heart size={32} fill="currentColor" className="text-sky-600" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">새신자 / 방문자 예배 참석 안내</h3>
+                  <p className="text-slate-600 mb-4 leading-relaxed">
+                    수원하나교회에 처음 방문하여 예배에 참석하기 원하시는 분들은<br className="hidden md:block"/> 
+                    새가족부 담당 사역자에게 연락하여 주시기 바랍니다.
+                  </p>
+                  <div className="inline-block bg-white px-6 py-3 rounded-xl border border-sky-100 shadow-sm">
+                    <span className="font-bold text-slate-800 mr-2">새가족부 담당 사역자</span>
+                    <span className="text-sky-600 font-bold">신상철 목사 (010-2484-0776)</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Main Worship */}
+              <div>
+                <h3 className="font-bold text-2xl text-slate-900 mb-8 flex items-center">
+                  예배 시간 안내
+                </h3>
+                <div className="grid grid-cols-1 gap-6">
+                  {/* 1. Sunday Morning */}
+                  <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b border-slate-100 pb-6">
+                       <div>
+                          <span className="text-sky-600 font-bold text-sm tracking-wide uppercase mb-1 block">Seeker’s Service</span>
+                          <h4 className="text-2xl font-bold text-slate-900">자녀와 함께 드리는 열린예배</h4>
+                       </div>
+                       <div className="mt-4 md:mt-0 flex items-center bg-slate-50 px-4 py-2 rounded-lg border border-slate-100">
+                          <Clock size={18} className="text-slate-400 mr-2"/>
+                          <span className="font-bold text-slate-800">주일 오전 9시, 11시</span>
+                          <span className="mx-2 text-slate-300">|</span>
+                          <span className="text-slate-600">2층</span>
+                       </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                       <div className="md:col-span-2 space-y-4">
+                          <p className="text-slate-600 leading-relaxed">
+                            자녀들과 함께 드리는 예배로 복음과 구원에 초점을 맞추어 드려지는 예배입니다. 
+                            “열린 예배”는 믿는 분들, 믿지 않는 분들 누구에게나 열려 있습니다. 이웃들과 함께 오십시오. 환영합니다.
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                             <span className="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-sm">#복음과 구원</span>
+                             <span className="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-sm">#치유와 중보기도</span>
+                          </div>
+                       </div>
+                       <div className="bg-slate-50 rounded-xl p-5 text-sm space-y-2">
+                          <div className="flex">
+                             <span className="font-bold text-slate-700 w-12 shrink-0">대상</span>
+                             <span className="text-slate-600">복음을 알기 원하는 분,<br/>복음을 전하기 원하는 분</span>
+                          </div>
+                       </div>
+                    </div>
+                  </div>
+
+                  {/* 2. Young Adult */}
+                  <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b border-slate-100 pb-6">
+                       <div>
+                          <span className="text-sky-600 font-bold text-sm tracking-wide uppercase mb-1 block">Seeker’s Service</span>
+                          <h4 className="text-2xl font-bold text-slate-900">젊은이 열린예배</h4>
+                       </div>
+                       <div className="mt-4 md:mt-0 flex items-center bg-slate-50 px-4 py-2 rounded-lg border border-slate-100">
+                          <Clock size={18} className="text-slate-400 mr-2"/>
+                          <span className="font-bold text-slate-800">주일 오후 2시 30분</span>
+                          <span className="mx-2 text-slate-300">|</span>
+                          <span className="text-slate-600">2층</span>
+                       </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                       <div className="md:col-span-2 space-y-4">
+                          <p className="text-slate-600 leading-relaxed">
+                            중고등학생, 대학생, 청년들이 함께 드리는 예배로 복음과 구원에 초점을 맞추어 드려지는 예배입니다.
+                            누구에게나 열려 있습니다.
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                             <span className="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-sm">#복음과 구원</span>
+                             <span className="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-sm">#치유와 중보기도</span>
+                          </div>
+                       </div>
+                       <div className="bg-slate-50 rounded-xl p-5 text-sm space-y-2">
+                          <div className="flex">
+                             <span className="font-bold text-slate-700 w-12 shrink-0">대상</span>
+                             <span className="text-slate-600">복음을 알기 원하는 분,<br/>복음을 전하기 원하는 분</span>
+                          </div>
+                       </div>
+                    </div>
+                  </div>
+
+                  {/* 3. Friday */}
+                  <div className="bg-slate-900 text-white border border-slate-800 rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b border-slate-700 pb-6">
+                       <div>
+                          <span className="text-sky-400 font-bold text-sm tracking-wide uppercase mb-1 block">Members Worship</span>
+                          <h4 className="text-2xl font-bold">금요예배</h4>
+                       </div>
+                       <div className="mt-4 md:mt-0 flex items-center bg-slate-800 px-4 py-2 rounded-lg border border-slate-700">
+                          <Clock size={18} className="text-slate-400 mr-2"/>
+                          <span className="font-bold text-slate-200">금요일 저녁 9시</span>
+                          <span className="mx-2 text-slate-600">|</span>
+                          <span className="text-slate-400">2층</span>
+                       </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                       <div className="md:col-span-2 space-y-4">
+                          <p className="text-slate-300 leading-relaxed">
+                            하나교회 가족들이 참가하는 예배이며, 믿는 자들의 영적 성숙에 초점을 맞추고 있습니다.
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                             <span className="px-3 py-1 bg-slate-800 text-slate-300 rounded-full text-sm border border-slate-700">#신자들의 성숙</span>
+                             <span className="px-3 py-1 bg-slate-800 text-slate-300 rounded-full text-sm border border-slate-700">#비전</span>
+                          </div>
+                       </div>
+                       <div className="bg-slate-800 rounded-xl p-5 text-sm space-y-2 border border-slate-700">
+                          <div className="flex">
+                             <span className="font-bold text-slate-400 w-12 shrink-0">대상</span>
+                             <span className="text-slate-200">하나교회 가족</span>
+                          </div>
+                       </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Next Gen */}
+              <div>
+                <h3 className="font-bold text-2xl text-slate-900 mb-8 flex items-center">
+                  다음세대 예배 시간 안내
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                   {/* Joy Baby */}
+                   <div className="bg-white p-6 border border-slate-200 shadow-sm">
+                      <h4 className="font-bold text-lg text-slate-900 mb-2 flex items-center">
+                         <span className="w-2 h-2 rounded-full bg-sky-500 mr-2"></span>조이베이비 (영아부)
+                      </h4>
+                      <p className="text-slate-600 text-sm mb-4">36개월 미만의 유아들과 부모님이 함께 드리는 예배입니다.</p>
+                      <div className="bg-slate-50 p-4 text-sm space-y-2">
+                         <div className="flex justify-between">
+                            <span className="text-slate-500">대상</span>
+                            <span className="font-bold text-slate-800">36개월 미만의 영유아와 부모님</span>
+                         </div>
+                         <div className="flex justify-between">
+                            <span className="text-slate-500">시간</span>
+                            <span className="font-bold text-slate-800">주일 오전 9시 30분</span>
+                         </div>
+                         <div className="flex justify-between">
+                            <span className="text-slate-500">장소</span>
+                            <span className="font-bold text-slate-800">NGC 지하예배실</span>
+                         </div>
+                      </div>
+                   </div>
+
+                   {/* Joy Corner */}
+                   <div className="bg-white p-6 border border-slate-200 shadow-sm">
+                      <h4 className="font-bold text-lg text-slate-900 mb-2 flex items-center">
+                         <span className="w-2 h-2 rounded-full bg-yellow-500 mr-2"></span>조이코너 (유치부)
+                      </h4>
+                      <p className="text-slate-600 text-sm mb-4">36개월 이상의 유치부 아동들의 예배입니다.</p>
+                      <div className="bg-slate-50 p-4 text-sm space-y-2">
+                           <div className="flex justify-between">
+                            <span className="text-slate-500">대상</span>
+                            <span className="font-bold text-slate-800">36개월 이상 ~ 미취학 아동과 부모님</span>
+                         </div>
+                         <div className="flex justify-between">
+                            <span className="text-slate-500">시간</span>
+                            <span className="font-bold text-slate-800">주일 오후 1시</span>
+                         </div>
+                         <div className="flex justify-between">
+                            <span className="text-slate-500">장소</span>
+                            <span className="font-bold text-slate-800">본당 2층</span>
+                         </div>
+                      </div>
+                   </div>
+
+                   {/* Joy Land */}
+                   <div className="bg-white p-6 border border-slate-200 shadow-sm">
+                      <h4 className="font-bold text-lg text-slate-900 mb-2 flex items-center">
+                         <span className="w-2 h-2 rounded-full bg-green-500 mr-2"></span>조이랜드 (초등부)
+                      </h4>
+                      <p className="text-slate-600 text-sm mb-4">주일예배는 “자녀와 함께 드리는 열린예배”를 부모님과 함께 드립니다.</p>
+                             <div className="bg-slate-50 p-4 text-sm space-y-2">
+                         <div className="flex justify-between">
+                            <span className="text-slate-500">시간</span>
+                            <span className="font-bold text-slate-800">화요일 저녁 7시</span>
+                         </div>
+                         <div className="flex justify-between">
+                            <span className="text-slate-500">장소</span>
+                            <span className="font-bold text-slate-800">NGC 지하예배실</span>
+                         </div>
+                      </div>                    
+                   </div>
+
+                   {/* YCM */}
+                   <div className="bg-white p-6  border border-slate-200 shadow-sm">
+                      <h4 className="font-bold text-lg text-slate-900 mb-2 flex items-center">
+                         <span className="w-2 h-2 rounded-full bg-purple-500 mr-2"></span>YCM (중고등부)
+                      </h4>
+                      <p className="text-slate-600 text-sm mb-4">예배 후 모임(스탠딩 투게더)이 있습니다.</p>
+                      <div className="bg-slate-50 p-4  text-sm space-y-2">
+                         <div className="flex justify-between">
+                            <span className="text-slate-500">시간</span>
+                            <span className="font-bold text-slate-800">주일 오후 4시 30분</span>
+                         </div>
+                         <div className="flex justify-between">
+                            <span className="text-slate-500">장소</span>
+                            <span className="font-bold text-slate-800">본당 2층</span>
+                         </div>
+                      </div>
+                   </div>
                 </div>
               </div>
             </div>
@@ -456,7 +660,7 @@ const IntroPage = ({ activeIntroTab, setActiveIntroTab }) => {
                  수원하나교회 찾아오시는 길
               </h3>
               {/* 지도 섹션 */}
-              <div className="w-full h-[400px] bg-slate-100 rounded-2xl overflow-hidden shadow-sm border border-slate-200 relative">
+              <div className="w-full h-[400px] bg-slate-100 overflow-hidden shadow-sm border border-slate-200 relative">
                 <iframe 
                   width="100%" 
                   height="100%" 
@@ -473,7 +677,7 @@ const IntroPage = ({ activeIntroTab, setActiveIntroTab }) => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* 주소 정보 */}
-                <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+                <div className="bg-white p-8 border border-slate-100 shadow-sm">
                   <h3 className="font-bold text-xl mb-6 flex items-center text-slate-900">
                     교회 위치
                   </h3>
@@ -510,7 +714,7 @@ const IntroPage = ({ activeIntroTab, setActiveIntroTab }) => {
                 </div>
 
                 {/* 교통편 */}
-                <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+                <div className="bg-white p-8  border border-slate-100 shadow-sm">
                    <h3 className="font-bold text-xl mb-6 flex items-center text-slate-900">
                      교통 안내
                   </h3>
@@ -518,25 +722,73 @@ const IntroPage = ({ activeIntroTab, setActiveIntroTab }) => {
                     <div className="flex">
                       <div className="w-20 font-bold text-slate-500 shrink-0">버스</div>
                       <div className="text-slate-700 text-sm leading-relaxed">
-                        <span className="font-bold text-sky-600">일반</span> 1112, 5100, 7000 (경희대 정문 하차)<br/>
-                        <span className="font-bold text-green-600">마을</span> 55, 11-1 (서천마을 하차)
-                      </div>
+                        <span className="font-bold text-sky-600">일반</span> 1112, M5107, 5100, 7000 등 (서그내 하차)<br/>
+                        <span className="font-bold text-green-600">마을</span> 55, 53-1 (SK아파트 하차)<br/>
+                    </div>
                     </div>
                     <div className="flex">
                       <div className="w-20 font-bold text-slate-500 shrink-0">지하철</div>
                       <div className="text-slate-700 text-sm leading-relaxed">
-                        수인분당선 <span className="font-bold text-yellow-600">영통역</span> 3번 출구 <br/>→ 버스 환승 (1112, 5100번)
-                      </div>
-                    </div>
-                    <div className="flex">
-                      <div className="w-20 font-bold text-slate-500 shrink-0">주차</div>
-                      <div className="text-slate-700 text-sm leading-relaxed">
-                        교회 1층 주차장 이용 가능<br/>
-                        <span className="text-slate-400 text-xs">* 주차 공간이 협소할 수 있습니다.</span>
-                      </div>
+                        수인분당선 <span className="font-bold text-yellow-600">영통역</span> 1번 출구 <br/>→ <span className='font-bold'>55번 마을버스</span> 승차 → SK아파트 정류장에서 하차 → GS25서천현대점 안쪽 골목까지 200m(도보2분) 
+                         <br/><span className="text-slate-400 text-xs">* 영통역에서 교회까지 도보로는 15분 정도 소요됩니다.  </span>
                     </div>
                   </div>
+                    <div className="flex">
+                      <div className="w-20 font-bold text-slate-500 shrink-0"></div>
+                      <div className="text-slate-700 text-sm leading-relaxed">
+                        수인분당선 <span className="font-bold text-yellow-600">망포역</span> 3번 출구 <br/>→ <span className='font-bold'>8번 버스</span> 승차 → 서그내 정류장에서 하차 → GS25서천현대점 안쪽 골목까지 400m(도보5분) 
+                    </div>
+                  </div>
+                  </div>
                 </div>
+              </div>
+
+            {/* 주차 안내 */}
+              <div className="bg-white p-8 border border-slate-100 shadow-sm">
+                 <h3 className="font-bold text-xl mb-8 flex items-center text-slate-900">
+                    주차 및 셔틀버스 안내
+                 </h3>
+                 
+                 <div className="space-y-6">
+                    {/* 1. 교육관 주차장 */}
+                    <div className="flex flex-col md:flex-row bg-white overflow-hidden border border-slate-100 shadow-sm">
+                        <div className="bg-gray-50 p-6 md:w-48 flex flex-col items-center justify-center text-center shrink-0">
+                            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-600 mb-3 shadow-sm">
+                                <MapPin size={24} />
+                            </div>
+                            <span className="font-bold text-gray-700">교육관 주차장</span>
+                        </div>
+                        <div className="p-6 flex-1 flex flex-col justify-center">
+                            <p className="text-slate-800 font-medium mb-2">본당 주차공간이 협소하여 교육관 주차장 이용을 권장합니다.</p>
+                            <p className="text-slate-500 text-sm mb-4">본당과 주차장 사이 도보 약 12분 소요</p>
+                            <div className="bg-slate-50 px-4 py-3 rounded-lg border border-slate-100 inline-block">
+                                <span className="font-bold text-slate-700 text-sm mr-2">주소</span>
+                                <span className="text-slate-600 text-sm">경기 용인시 기흥구 서그내로53번길 30</span>
+                            </div>
+                        </div>
+                    </div>
+
+                  
+                    {/* 2. 셔틀버스 */}
+                    <div className="flex flex-col md:flex-row bg-white overflow-hidden border border-slate-100 shadow-sm">
+                        <div className="bg-gray-50 p-6 md:w-48 flex flex-col items-center justify-center text-center shrink-0">
+                            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-600 mb-3 shadow-sm">
+                                <Clock size={24} />
+                            </div>
+                            <span className="font-bold text-gray-700">셔틀버스 운행</span>
+                        </div>
+                        <div className="p-6 flex-1 flex flex-col justify-center">
+                            <p className="text-slate-800 font-medium mb-3">교육관 ↔ 본당 간 셔틀버스를 운행합니다.</p>
+                            <p className="text-slate-500 text-sm mb-4">주일 예배 20분 전, 금요 예배 전 20:00시 부터</p>
+                            <div className="flex flex-wrap gap-3">
+                              <span className="px-3 py-1 bg-sky-100 text-sky-700 rounded-l text-sm font-bold">주일 1부 (09:00)</span>
+                              <span className="px-3 py-1 bg-sky-100 text-sky-700 rounded-l text-sm font-bold">주일 2부 (11:00)</span>
+                              <span className="px-3 py-1 bg-sky-100 text-sky-700 rounded-l text-sm font-bold">주일 3부 (14:30)</span>
+                              <span className="px-3 py-1 bg-sky-100 text-sky-700 rounded-l text-sm font-bold">금요예배 (21:00)</span>                              
+                            </div>
+                        </div>
+                    </div>
+                 </div>
               </div>
             </div>
           )}
@@ -961,7 +1213,7 @@ const App = () => {
               <ul className="space-y-2 text-sm">
                 <li className="flex justify-between"><span>주일 1부</span> <span>09:00</span></li>
                 <li className="flex justify-between"><span>주일 2부</span> <span>11:00</span></li>
-                <li className="flex justify-between"><span>주일 3부</span> <span>02:30</span></li>
+                <li className="flex justify-between"><span>주일 3부</span> <span>14:30</span></li>
               </ul>
             </div>
           </div>
