@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Menu,
   X,
@@ -17,6 +17,7 @@ import {
   Hash,
   ChevronLeft,
   ChevronDown,
+  ExternalLink,
 } from "lucide-react";
 import mainLogo from "./assets/mainlogo-removebg-preview.png";
 import background02 from "./assets/background02.jpg";
@@ -30,7 +31,7 @@ import keep from "./assets/keep.png";
 import Worship from "./assets/worship01.png";
 import moment from "moment";
 import "moment/locale/ko";
-import { historyData } from "./data";
+import { bookList, coreValuePart1, coreValuePart2, historyData } from "./data";
 
 // 커스텀 재생 버튼 컴포넌트
 const CustomPlayButton = ({ size = 64, className = "" }) => (
@@ -382,6 +383,63 @@ const IntroPage = ({ activeIntroTab, setActiveIntroTab }) => {
       prev.includes(year) ? prev.filter((y) => y !== year) : [...prev, year]
     );
   };
+
+  // 핵심가치 개별 아이템 컴포넌트 (토글 기능 포함)
+  const CoreValueItem = ({ index, title, sub, desc }) => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    return (
+      <div className="flex gap-5 group items-start">
+        {/* 번호 영역 */}
+        <div
+          className={`
+          shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-xl transition-colors duration-300
+          ${
+            isOpen
+              ? "bg-sky-600 text-white"
+              : "bg-sky-50 text-sky-600 group-hover:bg-sky-600 group-hover:text-white"
+          }
+        `}
+        >
+          {String(index).padStart(2, "0")}
+        </div>
+
+        {/* 텍스트 및 토글 영역 */}
+        <div className="flex-1 pt-1">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="flex items-center flex-wrap gap-2 text-xl font-bold text-slate-900 hover:text-sky-600 transition-colors text-left w-full group/btn"
+          >
+            <span>{title}</span>
+            {sub && (
+              <span className="text-sm font-normal text-slate-500 mt-1">
+                {sub}
+              </span>
+            )}
+            <ChevronDown
+              className={`w-5 h-5 text-slate-400 transition-transform duration-300 ${
+                isOpen ? "rotate-180" : ""
+              } group-hover/btn:text-sky-600`}
+            />
+          </button>
+
+          {/* 토글 내용 (애니메이션 효과) */}
+          <div
+            className={`grid transition-[grid-template-rows] duration-300 ease-out ${
+              isOpen ? "grid-rows-[1fr] mt-4" : "grid-rows-[0fr]"
+            }`}
+          >
+            <div className="overflow-hidden">
+              <div className="bg-slate-50 rounded-lg p-6 border border-slate-100 text-slate-600 leading-relaxed text-justify shadow-sm whitespace-pre-line">
+                {desc}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="bg-white min-h-screen animate-fade-in">
       <HeroSub
@@ -450,10 +508,10 @@ const IntroPage = ({ activeIntroTab, setActiveIntroTab }) => {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
                 {/* 1. 하나님을 즐거워 함 */}
-                <div className="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:shadow-lg transition-all duration-300 group">
-                  <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-sky-600 mb-6 text-xl font-bold group-hover:bg-sky-600 group-hover:text-white transition-colors">
+                <div className=" p-8 border border-slate-100 hover:shadow-lg transition-all duration-300 group">
+                  {/* <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-sky-600 mb-6 text-xl font-bold group-hover:bg-sky-600 group-hover:text-white transition-colors">
                     01
-                  </div>
+                  </div> */}
                   <h3 className="text-2xl font-bold text-slate-900 mb-4">
                     하나님을 즐거워 함
                   </h3>
@@ -468,10 +526,10 @@ const IntroPage = ({ activeIntroTab, setActiveIntroTab }) => {
                 </div>
 
                 {/* 2. 그 분의 목적 */}
-                <div className="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:shadow-lg transition-all duration-300 group">
-                  <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-sky-600 mb-6 text-xl font-bold group-hover:bg-sky-600 group-hover:text-white transition-colors">
+                <div className="p-8 border border-slate-100 hover:shadow-lg transition-all duration-300 group">
+                  {/* <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-sky-600 mb-6 text-xl font-bold group-hover:bg-sky-600 group-hover:text-white transition-colors">
                     02
-                  </div>
+                  </div> */}
                   <h3 className="text-2xl font-bold text-slate-900 mb-4">
                     그 분의 목적
                   </h3>
@@ -487,10 +545,10 @@ const IntroPage = ({ activeIntroTab, setActiveIntroTab }) => {
                 </div>
 
                 {/* 3. 공동체 */}
-                <div className="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:shadow-lg transition-all duration-300 group">
-                  <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-sky-600 mb-6 text-xl font-bold group-hover:bg-sky-600 group-hover:text-white transition-colors">
+                <div className="p-8  border border-slate-100 hover:shadow-lg transition-all duration-300 group">
+                  {/* <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-sky-600 mb-6 text-xl font-bold group-hover:bg-sky-600 group-hover:text-white transition-colors">
                     03
-                  </div>
+                  </div> */}
                   <h3 className="text-2xl font-bold text-slate-900 mb-4">
                     공동체
                   </h3>
@@ -515,35 +573,52 @@ const IntroPage = ({ activeIntroTab, setActiveIntroTab }) => {
           )}
 
           {activeIntroTab === "핵심가치" && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
-              {[
-                {
-                  title: "예배 (Worship)",
-                  desc: "영과 진리로 드리는 예배의 감격",
-                  icon: Heart,
-                },
-                {
-                  title: "훈련 (Training)",
-                  desc: "예수 그리스도의 제자로 성장",
-                  icon: Users,
-                },
-                {
-                  title: "선교 (Mission)",
-                  desc: "땅 끝까지 이르러 증인 되는 삶",
-                  icon: MapPin,
-                },
-              ].map((v, i) => (
-                <div
-                  key={i}
-                  className="bg-white p-8 rounded-2xl text-center hover:-translate-y-2 transition-transform duration-300 border border-slate-100 shadow-sm hover:shadow-md"
-                >
-                  <div className="w-14 h-14 mx-auto bg-sky-50 rounded-full shadow-sm flex items-center justify-center text-sky-600 mb-6">
-                    <v.icon size={24} />
-                  </div>
-                  <h3 className="font-bold text-lg mb-3">{v.title}</h3>
-                  <p className="text-slate-500 text-sm">{v.desc}</p>
+            <div className="space-y-20 animate-fade-in max-w-5xl mx-auto py-10">
+              {/* Section 1 */}
+              <div>
+                <div className="flex items-center gap-4 mb-12">
+                  <div className="h-px flex-1 bg-slate-200"></div>
+                  <h3 className="text-2xl font-bold text-slate-900 text-center px-4 py-2 bg-slate-50 rounded-lg">
+                    핵심가치 Part 1
+                  </h3>
+                  <div className="h-px flex-1 bg-slate-200"></div>
                 </div>
-              ))}
+                <div className="grid grid-cols-1 md:grid-cols-1 gap-x-12 gap-y-8">
+                  {coreValuePart1 &&
+                    coreValuePart1?.map((item, idx) => (
+                      <CoreValueItem
+                        key={idx}
+                        index={idx + 1}
+                        title={item.title}
+                        sub={item.sub}
+                        desc={item.desc}
+                      />
+                    ))}
+                </div>
+              </div>
+
+              {/* Section 2 */}
+              <div>
+                <div className="flex items-center gap-4 mb-12">
+                  <div className="h-px flex-1 bg-slate-200"></div>
+                  <h3 className="text-2xl font-bold text-slate-900 text-center px-4 py-2 bg-slate-50 rounded-lg">
+                    핵심가치 Part 2
+                  </h3>
+                  <div className="h-px flex-1 bg-slate-200"></div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-1 gap-x-12 gap-y-8">
+                  {coreValuePart2 &&
+                    coreValuePart2?.map((item, idx) => (
+                      <CoreValueItem
+                        key={idx}
+                        index={idx + 7}
+                        title={item.title}
+                        sub={item.sub}
+                        desc={item.desc}
+                      />
+                    ))}
+                </div>
+              </div>
             </div>
           )}
 
@@ -633,14 +708,15 @@ const IntroPage = ({ activeIntroTab, setActiveIntroTab }) => {
           )}
 
           {activeIntroTab === "담임목사 소개" && (
-            <div className="animate-fade-in-up">
+            <div className="animate-fade-in-up space-y-16">
+              {/* 섹션 1: 목사님 프로필 (기존 코드 유지) */}
               <div className="flex flex-col md:flex-row gap-10 items-start">
                 <div className="w-full md:w-[320px] shrink-0">
-                  <div className="rounded-2xl overflow-hidden shadow-lg border border-slate-100 bg-slate-50">
+                  <div className="rounded-2xl overflow-hidden shadow-lg border border-slate-100 bg-slate-50 relative group">
                     <img
                       src={spastor_ko}
                       alt="고성준 담임목사"
-                      className="w-full h-auto object-cover aspect-[4/5]"
+                      className="w-full h-auto object-cover aspect-[4/5] transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
                 </div>
@@ -669,6 +745,70 @@ const IntroPage = ({ activeIntroTab, setActiveIntroTab }) => {
                       사역을 위한 NGO 리홉(ReHope)을 발족하여 활동하고 있다.
                     </p>
                   </div>
+                </div>
+              </div>
+
+              {/* 섹션 2: 저서 소개 (신규 추가) */}
+              <div className="border-t border-slate-100 pt-10">
+                <div className="flex items-center justify-between mb-8 px-1">
+                  <div>
+                    <h3 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+                      저서 소개
+                    </h3>
+                  </div>
+                </div>
+
+                {/* Book List Grid/Scroll */}
+                <div className="flex md:grid md:grid-cols-6 gap-4 overflow-x-auto md:overflow-visible pb-4 px-1 scrollbar-hide snap-x">
+                  {bookList.slice(0, 6).map((book) => (
+                    <div
+                      key={book.id}
+                      className="shrink-0 w-[140px] md:w-auto flex flex-col group snap-start"
+                    >
+                      {/* 책 표지 영역 */}
+                      <div
+                        className={`w-full aspect-[1/1.4] rounded-lg shadow-sm mb-3 overflow-hidden relative ${book.color} flex items-center justify-center text-center p-2 border border-slate-100`}
+                      >
+                        {/* 실제 이미지가 있다면 아래 주석을 풀고 img 태그를 사용하세요 */}
+                        {/* <img 
+                      src={`/images/books/${book.title}.jpg`} 
+                      alt={book.title}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    /> 
+                    */}
+
+                        {/* 이미지가 없을 때를 대비한 타이포그래피 디자인 */}
+                        <div className="group-hover:scale-105 transition-transform duration-300">
+                          <span className="font-serif font-bold text-slate-700 text-sm md:text-base leading-tight block mb-2 break-keep">
+                            {book.title}
+                          </span>
+                          <div className="w-8 h-0.5 bg-slate-400 mx-auto opacity-50"></div>
+                        </div>
+
+                        {/* 호버 시 나타나는 구매 바로가기 오버레이 */}
+                        <a
+                          href={book.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[1px]"
+                        >
+                          <span className="bg-white text-slate-900 px-3 py-1.5 rounded-full text-[10px] md:text-xs font-bold flex items-center gap-1 shadow-lg transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                            구매하기 <ExternalLink className="w-3 h-3" />
+                          </span>
+                        </a>
+                      </div>
+
+                      {/* 책 정보 영역 */}
+                      <div className="px-1">
+                        <h4 className="font-bold text-slate-900 text-sm md:text-base mb-1 truncate">
+                          {book.title}
+                        </h4>
+                        <p className="text-xs text-slate-500 leading-relaxed break-keep line-clamp-3 md:line-clamp-none">
+                          {book.desc}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -1784,6 +1924,8 @@ const App = () => {
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade-in { animation: fadeIn 0.8s ease-out forwards; }
         .animate-fade-in-up { animation: fadeIn 0.8s ease-out 0.2s forwards opacity: 0; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
 
       {/* --- Header --- */}
