@@ -15,10 +15,8 @@ import {
   BookOpen,
   Search,
   Hash,
-  Play,
-  Monitor,
   ChevronLeft,
-  Car,
+  ChevronDown,
 } from "lucide-react";
 import mainLogo from "./assets/mainlogo-removebg-preview.png";
 import background02 from "./assets/background02.jpg";
@@ -30,6 +28,9 @@ import temp04 from "./assets/temp03.jpg";
 import spastor_ko from "./assets/spastor_ko.png";
 import keep from "./assets/keep.png";
 import Worship from "./assets/worship01.png";
+import moment from "moment";
+import "moment/locale/ko";
+import { historyData } from "./data";
 
 // 커스텀 재생 버튼 컴포넌트
 const CustomPlayButton = ({ size = 64, className = "" }) => (
@@ -373,6 +374,14 @@ const IntroPage = ({ activeIntroTab, setActiveIntroTab }) => {
     "예배안내",
     "오시는 길",
   ];
+
+  const [expandedYears, setExpandedYears] = useState(["2025"]);
+
+  const toggleYear = (year) => {
+    setExpandedYears((prev) =>
+      prev.includes(year) ? prev.filter((y) => y !== year) : [...prev, year]
+    );
+  };
   return (
     <div className="bg-white min-h-screen animate-fade-in">
       <HeroSub
@@ -539,35 +548,87 @@ const IntroPage = ({ activeIntroTab, setActiveIntroTab }) => {
           )}
 
           {activeIntroTab === "교회연혁" && (
-            <div className="border-l-2 border-slate-200 pl-8 space-y-12 animate-fade-in ml-4">
-              {[
-                {
-                  year: "2025",
-                  title: "비전 선포",
-                  desc: "새 성전 입당 및 2025 비전 선포",
-                },
-                {
-                  year: "2020",
-                  title: "창립 10주년",
-                  desc: "해외 선교사 파송 및 지역 섬김 사역 확대",
-                },
-                {
-                  year: "2015",
-                  title: "교회 설립",
-                  desc: "수원 영통구에서 첫 예배 시작 (개척 멤버 12명)",
-                },
-              ].map((item, i) => (
-                <div key={i} className="relative">
-                  <div className="absolute -left-[41px] top-0 w-5 h-5 rounded-full bg-sky-600 border-4 border-white shadow-sm"></div>
-                  <span className="text-sky-600 font-bold text-lg block mb-2">
-                    {item.year}
-                  </span>
-                  <h3 className="text-xl font-bold text-slate-900 mb-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-slate-500">{item.desc}</p>
-                </div>
-              ))}
+            <div className="animate-fade-in max-w-4xl mx-auto">
+              <h3 className="font-bold text-2xl text-slate-900 flex items-center">
+                교회연혁
+              </h3>
+              <div className="mt-2 mb-6">
+                <p className="">
+                  우리가 섬기고 있는 수원하나침례교회는 기독교한국침례회에
+                  소속된 침례교회입니다. 기독교한국침례회는 미국
+                  남침례교단(Southern Baptist Convention)의 한국 자매교단입니다.
+                  수원하나침례교회의 간략한 역사는 다음과 같습니다.
+                </p>
+              </div>
+
+              <div className="border-l-2 border-slate-200 pl-8 space-y-10 pb-12">
+                {historyData &&
+                  historyData?.map((item) => (
+                    <div key={item.year} className="relative">
+                      {/* Timeline Dot */}
+                      <div
+                        className={`absolute -left-[41px] md:-left-[42px]  w-5 h-5 rounded-full border-4 transition-colors duration-300 z-10 ${
+                          expandedYears.includes(item.year)
+                            ? "bg-white border-sky-600 scale-110"
+                            : "bg-slate-200 border-white"
+                        }`}
+                      ></div>
+
+                      {/* Header */}
+                      <div
+                        onClick={() => toggleYear(item.year)}
+                        className="flex items-center gap-4 cursor-pointer group select-none"
+                      >
+                        <h3
+                          className={`text-600 font-bold transition-colors duration-300 ${
+                            expandedYears.includes(item.year)
+                              ? "text-sky-600"
+                              : "text-slate-400 group-hover:text-slate-500"
+                          }`}
+                        >
+                          {item.year}
+                        </h3>
+                        <button
+                          className={`w-4 h-4 rounded-full flex items-center justify-center transition-all duration-300 ${
+                            expandedYears.includes(item.year)
+                              ? "bg-sky-100 text-sky-600 rotate-180"
+                              : "bg-slate-100 text-slate-400 group-hover:bg-slate-200"
+                          }`}
+                        >
+                          <ChevronDown size={18} />
+                        </button>
+                      </div>
+
+                      {/* Content */}
+                      {expandedYears.includes(item.year) && (
+                        <div className="mt-6 animate-fade-in">
+                          <ul className="space-y-4">
+                            {item.events.map((event, idx) => (
+                              <li
+                                key={idx}
+                                className="flex flex-col sm:flex-row sm:items-start gap-2"
+                              >
+                                <span className=" text-slate-600 text-sm w-26 shrink-0">
+                                  {/* 날짜 포맷 YYYY-MM-dd */}
+                                  {moment(
+                                    `${item.year}-${event.date}`,
+                                    "YYYY-MM-DD"
+                                  ).format("YYYY년MM월DD일")}
+                                </span>
+                                {/* <span className="font-medium text-slate-800 w-24 shrink-0 sm:hidden">
+                                {event.date}
+                              </span> */}
+                                <span className="text-slate-800 whitespace-pre-line leading-relaxed text-sm">
+                                  {event.content}
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+              </div>
             </div>
           )}
 
@@ -768,7 +829,7 @@ const IntroPage = ({ activeIntroTab, setActiveIntroTab }) => {
                         <div className="flex justify-between">
                           <span className="text-slate-500">시간</span>
                           <span className="font-bold text-slate-800">
-                            주일 오전 9시, 11시 <br /> 주일 오후 2시 30분
+                            주일 오전 9시, 11시, 14시 30분
                           </span>
                         </div>
                         <div className="flex justify-between">
