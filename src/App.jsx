@@ -1999,18 +1999,22 @@ const CommunityPage = () => {
 
             {/* 상세 정보 뷰 */}
             {selectedGroup && (
-              <div
-                key={selectedGroup.id}
-                className="bg-slate-50 rounded-3xl overflow-hidden shadow-sm border border-slate-100 flex flex-col md:flex-row animate-fade-in"
-              >
-                <div className="w-full md:w-1/2 aspect-video md:aspect-auto relative overflow-hidden">
-                  <img
-                    src={selectedGroup.img}
-                    alt={selectedGroup.name}
-                    className="absolute inset-0 w-full h-full object-cover"
+              <div key={selectedGroup.id} className="animate-fade-in">
+                {/* Image Carousel */}
+                <div className="mb-4 overflow-hidden shadow-lg border border-slate-100">
+                  <SimpleCarousel
+                    items={[
+                      {
+                        src: selectedGroup.img,
+                        altText: selectedGroup.name,
+                        key: 1,
+                      },
+                    ]}
                   />
                 </div>
-                <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+
+                {/* Text Content */}
+                <div className=" p-8 md:p-12 border border-slate-100">
                   <h4 className="text-4xl font-bold text-slate-900 mb-2">
                     {selectedGroup.name}
                   </h4>
@@ -2198,6 +2202,157 @@ const NewsPage = () => {
   );
 };
 
+// --- 훈련 페이지 (TrainingPage) ---
+const TrainingPage = () => {
+  const { tab } = useParams();
+  const navigate = useNavigate();
+
+  const tabs = [
+    { id: "wednesday", name: "훈련" },
+    { id: "dsm", name: "DSM" },
+  ];
+
+  const activeTab = tabs.find((t) => t.id === tab) || tabs[0];
+
+  return (
+    <div className="bg-white min-h-screen animate-fade-in">
+      <HeroSub
+        title="훈련"
+        subtitle="Discipleship"
+        image="https://images.unsplash.com/photo-1510936111840-65e151ad71bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+      />
+      <div className="max-w-7xl mx-auto px-6 py-20 flex flex-col md:flex-row gap-12">
+        <aside className="w-full md:w-64 shrink-0">
+          <div className="sticky top-24">
+            <h3 className="text-2xl font-bold text-slate-900 border-b-2 border-slate-900 pb-4 mb-6 hidden md:block">
+              훈련
+            </h3>
+            {/* Mobile Menu */}
+            <div className="md:hidden overflow-x-auto border-b border-slate-200 mb-8 pb-1">
+              <div className="flex space-x-6">
+                {tabs.map((t) => (
+                  <button
+                    key={t.id}
+                    onClick={() => navigate(`/discipleship/${t.id}`)}
+                    className={`whitespace-nowrap pb-3 text-sm font-bold border-b-2 transition-colors ${
+                      activeTab.id === t.id
+                        ? "text-slate-900 border-slate-900"
+                        : "text-slate-500 border-transparent"
+                    }`}
+                  >
+                    {t.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+            {/* Desktop Menu */}
+            <ul className="hidden md:space-y-1 md:block">
+              {tabs.map((t) => (
+                <li key={t.id}>
+                  <button
+                    onClick={() => navigate(`/discipleship/${t.id}`)}
+                    className={`w-full text-left py-3 px-4 rounded-lg text-sm font-bold transition-all ${
+                      activeTab.id === t.id
+                        ? "text-slate-900 bg-slate-50"
+                        : "text-slate-500 hover:text-slate-800"
+                    }`}
+                  >
+                    {t.name}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </aside>
+
+        <div className="flex-1 min-h-[500px]">
+          {activeTab.id === "wednesday" && (
+            <div className="animate-fade-in space-y-8">
+              <div className="border-b border-slate-200 pb-6 mb-8">
+                <span className="text-sky-600 font-bold tracking-wide uppercase text-sm mb-2 block">
+                  Wednesday Training
+                </span>
+                <h2 className="text-3xl font-bold text-slate-900">훈련</h2>
+              </div>
+
+              <div className="prose max-w-none text-slate-600 leading-relaxed">
+                <p className="text-lg mb-6">
+                  수원하나교회 훈련은 성도님들이 말씀 안에서 깊이 뿌리 내리고,
+                  예수 그리스도의 참된 제자로 성장하도록 돕는 훈련 과정입니다.
+                </p>
+
+                <div className="bg-slate-50 p-8 rounded-2xl border border-slate-100 my-8">
+                  <h4 className="text-xl font-bold text-slate-900 mb-4">
+                    훈련 안내
+                  </h4>
+                  <ul className="space-y-4">
+                    <li className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-sky-100 flex items-center justify-center shrink-0 mt-0.5">
+                        <Clock size={14} className="text-sky-600" />
+                      </div>
+                      <div>
+                        <strong className="text-slate-900 block mb-1">
+                          일시
+                        </strong>
+                        <span>매주 수요일 저녁 8시</span>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-sky-100 flex items-center justify-center shrink-0 mt-0.5">
+                        <MapPin size={14} className="text-sky-600" />
+                      </div>
+                      <div>
+                        <strong className="text-slate-900 block mb-1">
+                          장소
+                        </strong>
+                        <span>본당 2층 대예배실 및 소그룹실</span>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-sky-100 flex items-center justify-center shrink-0 mt-0.5">
+                        <Users size={14} className="text-sky-600" />
+                      </div>
+                      <div>
+                        <strong className="text-slate-900 block mb-1">
+                          대상
+                        </strong>
+                        <span>등록교인 누구나</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+
+                <h3 className="text-2xl font-bold text-slate-900 mb-4">
+                  커리큘럼 소개
+                </h3>
+                <p className="mb-4">
+                  체계적인 성경 공부와 나눔을 통해 신앙의 기초를 다지고, 삶의
+                  현장에서 말씀을 적용하는 훈련을 진행합니다. 제자훈련, 사역훈련
+                  등 단계별 과정을 통해 평신도 리더를 세우는 것을 목표로 합니다.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {activeTab.id === "dsm" && (
+            <div className="animate-fade-in">
+              <div className="border-b border-slate-200 pb-6 mb-8">
+                <span className="text-sky-600 font-bold tracking-wide uppercase text-sm mb-2 block">
+                  Daniel School of Ministry
+                </span>
+                <h2 className="text-3xl font-bold text-slate-900">DSM</h2>
+              </div>
+              <div className="bg-slate-50 rounded-2xl p-10 text-center border border-slate-100">
+                <p className="text-slate-500 text-lg">준비중인 페이지입니다.</p>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const AppContent = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -2245,8 +2400,11 @@ const AppContent = () => {
     {
       name: "훈련",
       id: "discipleship",
-      path: "/discipleship",
-      sub: [],
+      path: "/discipleship/wednesday",
+      sub: [
+        { name: "훈련", path: "/discipleship/wednesday" },
+        { name: "DSM", path: "/discipleship/dsm" },
+      ],
     },
     {
       name: "교회소개",
@@ -2404,6 +2562,11 @@ const AppContent = () => {
             element={<Navigate to="/community/light" replace />}
           />
           <Route path="/community/:tab" element={<CommunityPage />} />
+          <Route
+            path="/discipleship"
+            element={<Navigate to="/discipleship/wednesday" replace />}
+          />
+          <Route path="/discipleship/:tab" element={<TrainingPage />} />
           <Route path="/news" element={<NewsPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
