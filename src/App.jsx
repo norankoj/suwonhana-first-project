@@ -20,6 +20,9 @@ import {
   ExternalLink,
   Download,
   Copy,
+  Phone,
+  Smile,
+  CheckCircle,
 } from "lucide-react";
 import mainLogo from "./assets/mainlogo-removebg-preview.png";
 import background02 from "./assets/background02.jpg";
@@ -462,7 +465,7 @@ const MainPage = () => {
           </div>
         </section>
 
-        {/*  기부금 영수증 */}
+        {/* 기부금 영수증 */}
         <section className="py-24" style={{ backgroundColor: "#f8f8f8" }}>
           <div className="max-w-4xl mx-auto px-6 text-center">
             <h3 className="text-3xl font-bold text-slate-900 mb-6">
@@ -574,6 +577,301 @@ const MainPage = () => {
         </div>
       )}
     </>
+  );
+};
+
+// --- 상담 신청 페이지 (Reservation Page) ---
+const CounselingApplyPage = () => {
+  const navigate = useNavigate();
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitted(true);
+    // 실제로는 여기서 API를 호출하거나 폼 데이터를 처리합니다.
+    setTimeout(() => {
+      alert("상담 신청이 완료되었습니다. 담당자가 곧 연락드리겠습니다.");
+      navigate("/appendages/counseling");
+    }, 2000);
+  };
+
+  if (submitted) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
+        <div className="bg-white p-8 rounded-3xl shadow-lg text-center max-w-md w-full">
+          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-600">
+            <CheckCircle size={40} />
+          </div>
+          <h2 className="text-2xl font-bold text-slate-900 mb-2">신청 완료</h2>
+          <p className="text-slate-500 mb-8">
+            상담 예약이 성공적으로 접수되었습니다.
+            <br />
+            빠른 시일 내에 연락드리겠습니다.
+          </p>
+          <button
+            onClick={() => navigate("/")}
+            className="w-full py-3 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-colors"
+          >
+            홈으로 돌아가기
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-slate-50 py-20 px-6 animate-fade-in">
+      <div className="max-w-2xl mx-auto bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+        <div className="bg-slate-900 p-8 text-white text-center">
+          <h2 className="text-3xl font-bold mb-2">상담 예약 신청</h2>
+          <p className="text-slate-300">
+            마음의 회복과 치유를 위한 첫 걸음입니다.
+          </p>
+        </div>
+        <div className="p-8 md:p-10">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block text-sm font-bold text-slate-700 mb-2">
+                성함
+              </label>
+              <input
+                required
+                type="text"
+                placeholder="홍길동"
+                className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-sky-500 transition-colors"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-slate-700 mb-2">
+                연락처
+              </label>
+              <input
+                required
+                type="tel"
+                placeholder="010-1234-5678"
+                className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-sky-500 transition-colors"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-slate-700 mb-2">
+                상담 희망 내용 (간략히)
+              </label>
+              <textarea
+                rows="4"
+                placeholder="상담받고 싶은 내용을 간략하게 적어주세요."
+                className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:border-sky-500 transition-colors resize-none"
+              ></textarea>
+            </div>
+            <div className="pt-4 flex gap-4">
+              <button
+                type="button"
+                onClick={() => navigate(-1)}
+                className="flex-1 py-4 rounded-xl border border-slate-200 font-bold text-slate-600 hover:bg-slate-50 transition-colors"
+              >
+                취소
+              </button>
+              <button
+                type="submit"
+                className="flex-[2] py-4 rounded-xl bg-sky-600 text-white font-bold hover:bg-sky-700 transition-colors shadow-lg shadow-sky-200"
+              >
+                예약 신청하기
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// --- 부속기관 페이지 (AppendagesPage) ---
+const AppendagesPage = () => {
+  const { tab } = useParams();
+  const navigate = useNavigate();
+
+  // Tab Menu mapping
+  const tabs = [
+    { id: "counseling", name: "하나 상담실" },
+    { id: "daniel-amatz", name: "다니엘 아마츠" },
+  ];
+
+  const activeTab = tabs.find((t) => t.id === tab) || tabs[0];
+
+  return (
+    <div className="bg-white min-h-screen animate-fade-in">
+      <HeroSub
+        title="부속기관"
+        subtitle="Affiliated Organizations"
+        image="https://images.unsplash.com/photo-1516387938699-a93567ec168e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+      />
+      <div className="max-w-7xl mx-auto px-6 py-10 md:py-20 flex flex-col md:flex-row gap-4 md:gap-12">
+        {/* Sidebar */}
+        <aside className="w-full md:w-64 shrink-0">
+          <div className="sticky top-24">
+            <h3 className="text-2xl font-bold text-slate-900 border-b-2 border-slate-900 pb-4 mb-6 hidden md:block">
+              부속기관
+            </h3>
+            {/* Mobile Menu */}
+            <div className="md:hidden overflow-x-auto border-b border-slate-200 mb-8 pb-1">
+              <div className="flex space-x-6">
+                {tabs.map((t) => (
+                  <button
+                    key={t.id}
+                    onClick={() => navigate(`/appendages/${t.id}`)}
+                    className={`whitespace-nowrap pb-3 text-sm font-bold border-b-2 transition-colors ${
+                      activeTab.id === t.id
+                        ? "text-slate-900 border-slate-900"
+                        : "text-slate-500 border-transparent"
+                    }`}
+                  >
+                    {t.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+            {/* Desktop Menu */}
+            <ul className="hidden md:space-y-1 md:block">
+              {tabs.map((t) => (
+                <li key={t.id}>
+                  <button
+                    onClick={() => navigate(`/appendages/${t.id}`)}
+                    className={`w-full text-left py-3 px-4 rounded-lg text-sm font-bold transition-all ${
+                      activeTab.id === t.id
+                        ? "text-slate-900 bg-slate-50"
+                        : "text-slate-500 hover:text-slate-800"
+                    }`}
+                  >
+                    {t.name}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </aside>
+
+        {/* Content Area */}
+        <div className="flex-1 min-h-[500px]">
+          {/* 1. 하나 상담실 Content */}
+          {activeTab.id === "counseling" && (
+            <div className="animate-fade-in space-y-10">
+              {/* Header */}
+              <div className="border-b border-slate-200 pb-6">
+                <span className="text-sky-600 font-bold tracking-wide uppercase text-sm mb-2 block">
+                  Hana Counseling Center
+                </span>
+                <h2 className="text-3xl font-bold text-slate-900">
+                  하나 상담실
+                </h2>
+              </div>
+
+              {/* Intro Section */}
+              <div className="flex flex-col md:flex-row gap-8 items-start">
+                <div className="flex-1 space-y-6 text-slate-600 leading-relaxed text-lg">
+                  <p>
+                    <strong className="text-slate-900 text-xl block mb-2">
+                      평강의 하나님이 친히 너희를 온전히 거룩하게 하시고 또
+                      너희의 온 영과 혼과 몸이 우리 주 예수 그리스도께서
+                      강림하실 때에 흠 없게 보전되기를 원하노라 (데살로니가전서
+                      5:23)
+                    </strong>
+                    <br />
+                    상담을 통하여 개인과 가정에 대한 하나님의 창조 질서가
+                    회복되는 것을 그 사명으로 하며, 하나님의 말씀과 예수님의
+                    사랑과 성령님의 역사하심 안에서 전문적인 지식으로 개인이
+                    직면한 문제를 해결하도록 돕는 것을 목표로 하고 있습니다.
+                  </p>
+                  <p>
+                    하나상담실은 찾아 주시는 모든 분과 하나님과의 사랑의 관계
+                    가운데 치유와 회복과 성장을 경험하는 과정들을 함께 할
+                    것입니다. 하나님 안에서 수고하고 무거운 짐을 내려놓고 기쁘고
+                    풍성한 삶을 누리게 되시길 기도하고 축복합니다.
+                  </p>
+                  <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-lg space-y-2">
+                    <div className="flex items-center gap-3">
+                      <span className="font-bold text-slate-700">신청대상</span>
+                      <span>
+                        수원하나교회 예배에 정기적으로 출석하고 셀에 소속되어
+                        있는 분 또는 셀리더의 추천을 받은 분
+                      </span>
+                    </div>
+                    {/* <div className="flex items-center gap-3">
+                      <Phone className="text-slate-400" size={18} />
+                      <span className="font-bold text-slate-700">문의전화</span>
+                      <span>031-202-0697 (교회 사무실)</span>
+                    </div> */}
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Button */}
+              <div className="flex justify-center py-6">
+                <button
+                  // onClick={() => navigate("/counseling/apply")}
+                  className="group relative inline-flex items-center gap-3 px-8 py-4 bg-sky-600 text-white rounded-full font-bold text-lg hover:bg-sky-700 transition-all shadow-lg hover:shadow-sky-200 hover:-translate-y-1"
+                >
+                  상담 예약 신청하기
+                  <ArrowRight
+                    size={20}
+                    className="group-hover:translate-x-1 transition-transform"
+                  />
+                </button>
+              </div>
+
+              {/* Map Section */}
+              <div className="space-y-6">
+                <h3 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+                  <MapPin className="text-slate-900" /> 찾아오시는 길
+                </h3>
+                <div className="w-full h-[400px] bg-slate-100 rounded-2xl overflow-hidden shadow-sm border border-slate-200 relative">
+                  <iframe
+                    width="100%"
+                    height="100%"
+                    id="gmap_canvas"
+                    src="https://maps.google.com/maps?q=경기도%20용인시%20기흥구%20서그내로%2053번길%2030&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                    frameBorder="0"
+                    scrolling="no"
+                    marginHeight="0"
+                    marginWidth="0"
+                    title="counseling-map"
+                    className="grayscale hover:grayscale-0 transition-all duration-500"
+                  ></iframe>
+                </div>
+                <p className="text-slate-500 text-center">
+                  경기도 용인시 기흥구 서그내로 53번길 30(서천동 395번지)
+                  하나교회 교육관 1층
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* 2. 다니엘 아마츠 Placeholder */}
+          {activeTab.id === "daniel-amatz" && (
+            <div className="animate-fade-in space-y-10">
+              <div className="border-b border-slate-200 pb-6">
+                <span className="text-sky-600 font-bold tracking-wide uppercase text-sm mb-2 block">
+                  Daniel AMATZ
+                </span>
+                <h2 className="text-3xl font-bold text-slate-900">
+                  다니엘 아마츠
+                </h2>
+              </div>
+              <div className="bg-slate-50 rounded-2xl p-12 text-center border border-slate-100">
+                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm text-slate-400">
+                  <BookOpen size={32} />
+                </div>
+                <h3 className="text-xl font-bold text-slate-700 mb-2">
+                  페이지 준비중입니다
+                </h3>
+                <p className="text-slate-500">
+                  다니엘 선교원과 훈련센터에 대한 자세한 내용은 곧 업데이트 될
+                  예정입니다.
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -972,9 +1270,9 @@ const IntroPage = () => {
                       담임목사이자 Come Mission 국제 이사로 섬기고 있다.
                     </p>
                     <p>
-                      다음세대를 위한 기독대안학교 다니엘 아카데미, 선교사들을
-                      훈련하는 다니엘훈련학교(Daniel School of Ministry), 난민
-                      사역을 위한 NGO 리홉(ReHope)을 발족하여 활동하고 있다.
+                      선교사들을 훈련하는 다니엘훈련학교(Daniel School of
+                      Ministry), 난민 사역을 위한 NGO 리홉(ReHope)을 발족하여
+                      활동하고 있다.
                     </p>
                   </div>
                 </div>
@@ -1430,7 +1728,7 @@ const IntroPage = () => {
                   width="100%"
                   height="100%"
                   id="gmap_canvas"
-                  src="https://maps.google.com/maps?q=경기도%20용인시%20기흥구%20서그내로%2016번길%2011-6&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                  src="https://maps.google.com/maps?q=경기도%20용인시%20기흥구%20서그내로%2053번길%2030&t=&z=15&ie=UTF8&iwloc=&output=embed"
                   frameBorder="0"
                   scrolling="no"
                   marginHeight="0"
@@ -1452,7 +1750,8 @@ const IntroPage = () => {
                         주소
                       </p>
                       <p className="text-lg text-slate-800">
-                        (17103) 경기도 용인시 기흥구 서그내로 16번길 11-6
+                        (17103) 경기도 용인시 기흥구 서그내로 53번길 30(서천동
+                        395번지)
                       </p>
                     </div>
                     <div>
@@ -2430,8 +2729,11 @@ const AppContent = () => {
     {
       name: "부속기관",
       id: "appendages",
-      path: "#",
-      sub: [],
+      path: "/appendages/counseling",
+      sub: [
+        { name: "하나 상담실", path: "/appendages/counseling" },
+        { name: "다니엘 아마츠", path: "/appendages/daniel-amatz" },
+      ],
     },
   ];
 
@@ -2568,6 +2870,12 @@ const AppContent = () => {
             element={<Navigate to="/discipleship/wednesday" replace />}
           />
           <Route path="/discipleship/:tab" element={<TrainingPage />} />
+          <Route
+            path="/appendages"
+            element={<Navigate to="/appendages/counseling" replace />}
+          />
+          <Route path="/appendages/:tab" element={<AppendagesPage />} />
+          <Route path="/counseling/apply" element={<CounselingApplyPage />} />
           <Route path="/news" element={<NewsPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
@@ -2589,7 +2897,7 @@ const AppContent = () => {
                 />
               </div>
               <p className="ml-1 mb-6 leading-relaxed max-w-md text-sm">
-                (17103) 경기도 용인시 기흥구 서그내로 16번길 11-6
+                (17103) 경기도 용인시 기흥구 서그내로 53번길 30(서천동 395번지)
               </p>
             </div>
             <div>
