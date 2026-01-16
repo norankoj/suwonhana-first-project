@@ -725,7 +725,7 @@ const IntroPage = () => {
         subtitle="About Us"
         image="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
       />
-      <div className="max-w-7xl mx-auto px-6 py-20 flex flex-col md:flex-row gap-12">
+      <div className="max-w-7xl mx-auto px-6 py-10 md:py-20 flex flex-col md:flex-row gap-4 md:gap-12">
         <aside className="w-full md:w-64 shrink-0">
           <div className="sticky top-24">
             <h3 className="text-2xl font-bold text-slate-900 border-b-2 border-slate-900 pb-4 mb-6 hidden md:block">
@@ -1875,7 +1875,7 @@ const CommunityPage = () => {
         subtitle="Community"
         image="https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
       />
-      <div className="max-w-7xl mx-auto px-6 py-20 flex flex-col md:flex-row gap-12">
+      <div className="max-w-7xl mx-auto px-6 py-10 md:py-20 flex flex-col md:flex-row md:gap-12">
         {/* 사이드바 메뉴 */}
         <aside className="w-full md:w-64 shrink-0">
           <div className="sticky top-24">
@@ -1883,8 +1883,27 @@ const CommunityPage = () => {
               공동체
             </h3>
 
+            {/* Mobile Menu */}
+            <div className="md:hidden overflow-x-auto border-b border-slate-200 mb-8 pb-1">
+              <div className="flex space-x-6">
+                {groups.map((group) => (
+                  <button
+                    key={group.subtitle}
+                    onClick={() => handleGroupClick(group.subtitle)}
+                    className={`whitespace-nowrap pb-3 text-sm font-bold border-b-2 transition-colors ${
+                      activeTabName === group.subtitle
+                        ? "text-slate-900 border-slate-900"
+                        : "text-slate-500 border-transparent"
+                    }`}
+                  >
+                    {group.subtitle}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* 아코디언 메뉴 */}
-            <div className="border-t border-slate-200 md:border-t-0">
+            <div className="hidden md:block border-t border-slate-200 md:border-t-0">
               {groups.map((group) => {
                 const isExpanded = expandedGroups.includes(group.subtitle);
                 const isActive = activeTabName === group.subtitle;
@@ -1896,7 +1915,7 @@ const CommunityPage = () => {
                   >
                     <div
                       className={`flex items-center justify-between py-3 px-2 transition-colors ${
-                        isActive ? "bg-slate-50" : "hover:bg-slate-50"
+                        isActive ? "" : "hover:bg-slate-50"
                       }`}
                     >
                       <button
@@ -1930,7 +1949,7 @@ const CommunityPage = () => {
                           : "max-h-0 opacity-0"
                       }`}
                     >
-                      <div className="bg-slate-50 py-2 px-4 space-y-1 border-t border-slate-100">
+                      <div className="py-2 px-4 space-y-1 border-t border-slate-100">
                         {group.items.map((item) => (
                           <button
                             key={item.id}
@@ -1939,11 +1958,10 @@ const CommunityPage = () => {
                             }
                             className={`block w-full text-left text-sm py-2 px-3 rounded-lg transition-all ${
                               isActive && selectedGroup?.id === item.id
-                                ? "text-sky-600 font-bold bg-white shadow-sm"
+                                ? "text-600 font-bold bg-white shadow-sm"
                                 : "text-slate-500 hover:text-slate-800 hover:bg-slate-200/50"
                             }`}
                           >
-                            <span className="mr-2">•</span>
                             {item.name}
                           </button>
                         ))}
@@ -1959,47 +1977,38 @@ const CommunityPage = () => {
         {/* 메인 컨텐츠 영역 */}
         <div className="flex-1 min-h-[500px]">
           <div className="animate-fade-in">
-            <h3 className="text-2xl font-bold text-slate-900 mb-8 pl-2">
+            {/* <h3 className="text-2xl font-bold text-slate-900 mb-8 pl-2">
               {currentGroupData.subtitle}
-            </h3>
+            </h3> */}
 
             {/* 소그룹 선택 버튼 그리드 */}
-            {/* <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-8">
-              {currentGroupData.items.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => setSelectedGroup(item)}
-                  className={`p-4 rounded-xl border transition-all duration-300 flex flex-col items-center justify-center text-center h-28 ${
-                    selectedGroup.id === item.id
-                      ? "bg-sky-600 text-white border-sky-600 shadow-lg scale-105"
-                      : "bg-white text-slate-600 border-slate-200 hover:border-sky-300 hover:bg-sky-50"
-                  }`}
-                >
-                  <span
-                    className={`text-lg font-bold mb-1 ${
+            <div className="md:hidden overflow-x-auto border-b border-slate-200 mb-8 pb-1">
+              <div className="flex space-x-6">
+                {currentGroupData.items.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => setSelectedGroup(item)}
+                    className={`whitespace-nowrap pb-3 text-sm font-bold border-b-2 transition-colors ${
                       selectedGroup.id === item.id
-                        ? "text-white"
-                        : "text-slate-800"
+                        ? "text-slate-900 border-slate-900"
+                        : "text-slate-500 border-transparent"
                     }`}
                   >
                     {item.name}
-                  </span>
-                  <span
-                    className={`text-xs ${
-                      selectedGroup.id === item.id
-                        ? "text-sky-100"
-                        : "text-slate-400"
-                    }`}
-                  >
-                    {item.eng}
-                  </span>
-                </button>
-              ))}
-            </div> */}
+                  </button>
+                ))}
+              </div>
+            </div>
 
             {/* 상세 정보 뷰 */}
             {selectedGroup && (
               <div key={selectedGroup.id} className="animate-fade-in">
+                <h4 className="text-4xl font-bold text-slate-900 mb-2">
+                  {selectedGroup.name}
+                </h4>
+                <p className="text-sky-600 font-medium tracking-wide uppercase mb-6">
+                  {selectedGroup.eng}
+                </p>
                 {/* Image Carousel */}
                 <div className="mb-4 overflow-hidden shadow-lg border border-slate-100">
                   <SimpleCarousel
@@ -2012,16 +2021,8 @@ const CommunityPage = () => {
                     ]}
                   />
                 </div>
-
                 {/* Text Content */}
-                <div className=" p-8 md:p-12 border border-slate-100">
-                  <h4 className="text-4xl font-bold text-slate-900 mb-2">
-                    {selectedGroup.name}
-                  </h4>
-                  <p className="text-sky-600 font-medium tracking-wide uppercase mb-6">
-                    {selectedGroup.eng}
-                  </p>
-
+                <div className="pt-6 pl-2">
                   {selectedGroup.sub && (
                     <div className="mb-6 text-slate-700 font-medium whitespace-pre-line">
                       {selectedGroup.sub}
@@ -2221,7 +2222,7 @@ const TrainingPage = () => {
         subtitle="Discipleship"
         image="https://images.unsplash.com/photo-1510936111840-65e151ad71bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
       />
-      <div className="max-w-7xl mx-auto px-6 py-20 flex flex-col md:flex-row gap-12">
+      <div className="max-w-7xl mx-auto px-6 py-10 md:py-20 flex flex-col md:flex-row gap-4 md:gap-12">
         <aside className="w-full md:w-64 shrink-0">
           <div className="sticky top-24">
             <h3 className="text-2xl font-bold text-slate-900 border-b-2 border-slate-900 pb-4 mb-6 hidden md:block">
